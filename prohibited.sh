@@ -15,4 +15,10 @@ for software in "${insecure_software[@]}"; do
   fi
 done
 
+# Remove Unnecessary Packages
+packages=("telnetd" "ftp" "rsh-client" "rsh-server")
+for package in "${packages[@]}"; do
+    sudo apt-get remove --purge -y $package
+done
+
 echo "Script execution complete."
