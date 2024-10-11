@@ -76,4 +76,15 @@ else
     echo "SSH root login is already disabled."
 fi
 
+# Ensure Audit Logging is Enabled
+sudo systemctl enable auditd
+sudo systemctl start auditd
+
+# Update File Permissions for Sensitive Files
+sudo chmod 640 /etc/shadow
+sudo chmod 640 /etc/gshadow
+sudo chmod 644 /etc/passwd
+sudo chmod 644 /etc/group
+
+
 echo "Script execution complete."
