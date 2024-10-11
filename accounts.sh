@@ -25,31 +25,30 @@ default_accounts=(
   "uuidd" "systemd-oom" "tcpdump" "avahi-autoipd" "usbmux" "dnsmasq" "kernoops"
   "avahi" "cups-pk-helper" "rtkit" "whoopsie" "sssd" "speech-dispatcher"
   "nm-openvpn" "saned" "colord" "geoclue" "pulse" "gnome-initial-setup"
-  "hplip" "gdm" "rpc" "statd" "sshd"
+  "hplip" "gdm" "rpc" "statd" "sshd" "_rpc"
 )
 
 # Combine both authorized administrators and users into one array
 authorized_accounts=("${!authorized_admins[@]}" "${authorized_users[@]}")
 
-# Function to create accounts if missing
+# Function to create accounts if missing and set password to M4mm@lOfAct!0n
 create_account() {
   local user=$1
-  local password=$2
   if ! id -u "$user" &>/dev/null; then
     echo "Creating user: $user"
     sudo useradd -m "$user"
-    echo "$user:$password" | sudo chpasswd
   fi
+  echo "$user:M4mm@lOfAct!0n" | sudo chpasswd
 }
 
-# Ensure authorized users exist and set their passwords
+# Ensure authorized users exist and set their passwords to M4mm@lOfAct!0n
 for user in "${authorized_users[@]}"; do
-  create_account "$user" "default_password"
+  create_account "$user"
 done
 
-# Ensure authorized administrators exist, set their passwords, and grant sudo privileges
+# Ensure authorized administrators exist, set their passwords to M4mm@lOfAct!0n, and grant sudo privileges
 for admin in "${!authorized_admins[@]}"; do
-  create_account "$admin" "${authorized_admins[$admin]}"
+  create_account "$admin"
   if ! id -nG "$admin" | grep -qw "sudo"; then
     echo "Granting sudo privileges to authorized admin: $admin"
     sudo usermod -aG sudo "$admin"
