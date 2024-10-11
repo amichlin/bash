@@ -3,7 +3,7 @@
 # This script checks for Wireshark or ophcrack and removes them if they are installed
 
 # List of insecure software to check
-insecure_software=("wireshark" "ophcrack" "aisleriot")
+insecure_software=("wireshark" "ophcrack" "aisleriot" "ettercap-text-only" "ettercap-graphical")
 
 for software in "${insecure_software[@]}"; do
   if dpkg -l | grep -q "^ii  $software"; then
