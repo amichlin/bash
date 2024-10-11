@@ -1,8 +1,16 @@
 #!/bin/bash
-# Add Google Chrome repository and install Chrome
-if ! command -v google-chrome &> /dev/null; then
-  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-  sudo apt-get update -y
-  sudo apt-get install -y google-chrome-stable
+
+# Update package lists
+sudo apt-get update -y
+
+# Check if Google Chrome is installed, and update it if necessary
+if dpkg -l | grep -q "google-chrome-stable"; then
+    sudo apt-get install --only-upgrade -y google-chrome-stable
 fi
+
+# Check if Thunderbird is installed, and update it if necessary
+if dpkg -l | grep -q "thunderbird"; then
+    sudo apt-get install --only-upgrade -y thunderbird
+fi
+
+echo "Google Chrome and Thunderbird updates completed if installed."
