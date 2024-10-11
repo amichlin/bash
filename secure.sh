@@ -40,6 +40,12 @@ ufw_status=$(sudo ufw status | grep -i "status:")
 
 if [[ "$ufw_status" == *"inactive"* ]]; then
     echo "UFW is not enabled. Enabling it now..."
+    # Enable and Configure UFW (Uncomplicated Firewall)
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    sudo ufw allow ssh
+    sudo ufw allow http
+    sudo ufw allow https
     sudo ufw enable
     echo "UFW has been enabled."
 else
