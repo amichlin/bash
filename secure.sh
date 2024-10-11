@@ -86,5 +86,12 @@ sudo chmod 640 /etc/gshadow
 sudo chmod 644 /etc/passwd
 sudo chmod 644 /etc/group
 
+# Secure Shared Memory
+if ! grep -q "/run/shm" /etc/fstab; then
+    echo "tmpfs /run/shm tmpfs defaults,noexec,nosuid 0 0" | sudo tee -a /etc/fstab
+    sudo mount -o remount /run/shm
+fi
+
+
 
 echo "Script execution complete."
